@@ -14,16 +14,13 @@ import FBSDKLoginKit
 class UserViewController: UIViewController {
     
     @IBOutlet weak var userImage: UIImageView!
-    @IBOutlet weak var firstName: UILabel!
-    @IBOutlet weak var lastName: UILabel!
-    @IBOutlet weak var dateOfbirth: UILabel!
-    @IBOutlet weak var email: UILabel!
-    @IBOutlet weak var phone: UILabel!
-    @IBOutlet weak var logOutButton: UIButton!
+    @IBOutlet weak var userTableView: UITableView!
+    @IBOutlet weak var lblWelcome: UILabel!
     
     var userData:UserData?
     
-    
+    fileprivate let placeHolders = ["First name","Last name","Date of birth","Email Id","Phone number"]
+    fileprivate var values:[String] = [];
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,24 +28,30 @@ class UserViewController: UIViewController {
         // Do any additional setup after loading the view.
         self.userImage.layer.cornerRadius = self.userImage.frame.width / 2
         
-        self.firstName.text = userData?.first_name
-        self.lastName.text = userData?.last_name
-        self.dateOfbirth.text = userData?.date_of_birth
-        self.email.text = userData?.email
-        self.phone.text = userData?.phone
+      
+       self.lblWelcome.text = "Welcome \(userData!.first_name ?? "") !"
         
-        let session:URLSession = .shared
-        let task = session.dataTask(with: URL(string: userData!.imageUrl!)!) { (imageData, _, error) in
-            
-            guard let imageData = imageData, let image = UIImage(data: imageData) else {
-                return
+        values = [userData?.first_name,userData?.last_name ?? "",userData?.date_of_birth ?? "",userData?.email ?? "",userData?.phone ?? ""] as! [String]
+        
+       
+        if let url = URL(string: userData?.imageUrl ?? "") {
+                let session:URLSession = .shared
+                let task = session.dataTask(with: url) { (imageData, _, error) in
+                    
+                    guard let imageData = imageData, let image = UIImage(data: imageData) else {
+                        return
+                    }
+                    DispatchQueue.main.async {
+                        self.userImage.image = image
+                    }
+                    
+                }
+                task.resume()
             }
-            DispatchQueue.main.async {
-                self.userImage.image = image
-            }
             
-        }
-        task.resume()
+            
+        
+        
     }
     
     
@@ -62,14 +65,23 @@ class UserViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
-    /*
-    // MARK: - Navigation
+    
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+}
+
+
+// MARK: - <#UITableViewDelegate,UITableViewDataSource#>
+extension UserViewController:UITableViewDelegate,UITableViewDataSource{
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return placeHolders.count
     }
-    */
-
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell:TextFieldTableViewCell  = tableView.dequeueReusableCell(withIdentifier: "cell") as! TextFieldTableViewCell
+        cell.txtPlaceHolder.text = placeHolders[indexPath.row]
+        cell.txtDataValue.text = values[indexPath.row]
+        return cell
+    }
+    
 }

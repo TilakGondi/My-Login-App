@@ -28,10 +28,6 @@ struct UserData {
     var password: String?
     
     var imageUrl: String?
-        
-    
-    
-    
     
     
 }

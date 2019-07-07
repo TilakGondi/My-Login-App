@@ -12,29 +12,51 @@ import FacebookLogin
 import FacebookCore
 
 class LoginViewController: UIViewController {
-    //jwvxggejud_1562439493@tfbnw.net
     
     @IBOutlet weak var fbLoginButton: UIButton!
     @IBOutlet weak var emailLoginButton: UIButton!
     
+    
+    let fbGraphRequest = FBGraphRequest()
+    let loginManager = LoginManager()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        if AccessToken.current != nil {
+            
+            self.fbGraphRequest.getUserDataFromFB(AccessToken.current!.tokenString, completion: { [unowned self] (userData, error) in
+                print(userData ?? "")
+                
+                guard let user = userData else {
+                    print("Erro Fetching user data")
+                    self.loginManager.logOut()
+                    return
+                }
+                
+                let storyBoard = UIStoryboard.init(name: "Main", bundle: nil)
+                let profileView:UserViewController = storyBoard.instantiateViewController(withIdentifier: "ProfileVC") as! UserViewController
+                profileView.userData = user
+                self.navigationController?.present(profileView, animated: true, completion: nil)
+            })
+            print("Logged in!")
+            
+        }
         
-        
-       
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.isNavigationBarHidden = true
     }
     
     
     @IBAction func loginWithFacebook(_ sender: Any) {
-        
-        let loginManager = LoginManager()
         if AccessToken.current != nil
         {
             loginManager.logOut()
         }else{
-            
-            loginManager.logIn(permissions: [ .publicProfile, .email, .userGender, .userAboutMe ], viewController: self) { loginResult in
+
+            loginManager.logIn(permissions: [ .publicProfile, .email, .userGender, .userAboutMe ], viewController: self) { [unowned self] loginResult in
                 switch loginResult {
                 case .failed(let error):
                     print(error)
@@ -44,16 +66,16 @@ class LoginViewController: UIViewController {
                     print(accessToken)
                     print(grantedPermissions)
                     print(declinedPermissions)
-                    let fbGraphRequest = FBGraphRequest()
-                    fbGraphRequest.getUserDataFromFB(AccessToken.current!.tokenString, completion: { (userData, error) in
+                    
+                    self.fbGraphRequest.getUserDataFromFB(AccessToken.current!.tokenString, completion: {[unowned self] (userData, error) in
                         print(userData ?? "")
-                        
+
                         guard let user = userData else {
                             print("Erro Fetching user data")
-                            loginManager.logOut()
+                            self.loginManager.logOut()
                             return
                         }
-                        
+
                         let storyBoard = UIStoryboard.init(name: "Main", bundle: nil)
                         let profileView:UserViewController = storyBoard.instantiateViewController(withIdentifier: "ProfileVC") as! UserViewController
                         profileView.userData = user
@@ -62,26 +84,10 @@ class LoginViewController: UIViewController {
                     print("Logged in!")
                 }
             }
-            
-            
         }
-       
-        
     }
 
-    func getUserDataFromFb(){
-        let graphRequest:GraphRequest = GraphRequest(graphPath: "/me", parameters: ["fields":"id, name,first_name,last_name,email,picture.type(large),birthday"], httpMethod: .get)
-        
-        graphRequest.start { (response, result, error) in
-            if error == nil {
-                print(result as Any)
-            }else{
-                print(error?.localizedDescription as Any)
-            }
-        }
-    }
+   
 
 }
-
-
 

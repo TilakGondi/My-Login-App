@@ -26,7 +26,7 @@ class DBManager:NSObject {
         
         let managedcontext = appdelegate.persistentContainer.viewContext
         
-        let entity = NSEntityDescription.entity(forEntityName: "BusData", in: managedcontext)!
+        let entity = NSEntityDescription.entity(forEntityName: "User", in: managedcontext)!
         
         let userData = NSManagedObject(entity: entity, insertInto: managedcontext) as! User
         
@@ -84,5 +84,49 @@ class DBManager:NSObject {
         }
         
         return fetcheduser!
+    }
+    
+    func fetchUserWith(emailId email:String, password:String) -> UserData? {
+        
+        var predicate:NSPredicate? = nil
+        var fetcheduser:UserData?
+        let predicateEmail = NSPredicate(format: "email==\"\(email)\"")
+        let predicatePass = NSPredicate(format: "password==\"\(password)\"")
+        
+        predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicateEmail,predicatePass])
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return nil
+        }
+        
+        let ctxt = appDelegate.persistentContainer.viewContext
+        
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "User")
+        fetchRequest.predicate = predicate
+        do{
+            let userProfiles = try ctxt.fetch(fetchRequest)
+            
+            for userProfile in userProfiles {
+                let user = userProfile as! User
+                fetcheduser = UserData(
+                    first_name: user.first_name,
+                    last_name: user.last_name,
+                    phone: user.phone,
+                    email: user.email,
+                    date_of_birth: "",
+                    dob: user.date_of_birth!,
+                    password: user.password,
+                    imageUrl: "")
+                return fetcheduser!
+            }
+            
+            return nil
+            
+            
+        }catch let error as NSError {
+            print(error.localizedDescription)
+            return nil
+        }
+        
     }
 }
