@@ -25,6 +25,7 @@ class EmailLoginViewController: UIViewController {
     
     @IBAction func loginAction(_ sender: Any) {
         guard let user:UserData = (DBManager.shared.fetchUserWith(emailId: values[0], password: values[1])) else{
+            self.show(Alert: .InfoAlert, title: "Login error", message: "User email id or password wrong. Please try again later.", onController: self)
             return
         }
         print(user.first_name as Any)
@@ -34,11 +35,7 @@ class EmailLoginViewController: UIViewController {
         profileView.userData = user
         self.navigationController?.present(profileView, animated: true, completion: nil)
         
-        
-       
     }
-    
-    
 
 }
 
@@ -104,6 +101,41 @@ extension EmailLoginViewController:UITextFieldDelegate{
             //            textField.resignFirstResponder()
             textField.isSecureTextEntry = true
             
+        }
+    }
+}
+
+
+extension EmailLoginViewController {
+    func show(Alert type:AlertType,title t:String,message m:String,onSuccess s:(()-> Void)? = nil,
+              onFailure f:(() -> Void)? = nil,onController c:UIViewController?,confirmTitles:[String]? = nil) {
+        if c != nil {
+            let alert = UIAlertController(title: t, message: m, preferredStyle: .alert)
+            if type == .InfoAlert {
+                if let ttl = confirmTitles {
+                    alert.addAction(UIAlertAction(title: ttl[0], style: .default, handler: nil))
+                } else {
+                    alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (act) in
+                        if let closure = s {
+                            closure()
+                        }
+                    }))
+                }
+            } else if type == .ConfirmAlert {
+                if let ttl = confirmTitles {
+                    alert.addAction(UIAlertAction(title: ttl[0], style: .cancel, handler: { (act) in
+                        if let closure = f {
+                            closure()
+                        }
+                    }))
+                    alert.addAction(UIAlertAction(title: ttl[1], style: .default, handler: { (act) in
+                        if let closure = s {
+                            closure()
+                        }
+                    }))
+                }
+            }
+            c!.present(alert, animated: true, completion: nil)
         }
     }
 }

@@ -30,8 +30,12 @@ class SignUpViewController: UIViewController {
     @IBAction func signUpAction(_ sender: Any) {
         
         if self.validateAndSignUp() {
-            self.dismiss(animated: true, completion: nil)
+            
             self.show(Alert: .InfoAlert, title: "Signup success", message: "You have been successfully signed up. Please login.", onController: self)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                self.dismiss(animated: true, completion: nil)
+            }
+            
         }else{
             self.show(Alert: .InfoAlert, title: "Signup failed", message: "Failed to signup, please check the values you have entered and try again.", onController: self)
             return
