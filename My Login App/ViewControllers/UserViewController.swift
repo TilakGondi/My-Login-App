@@ -47,7 +47,6 @@ class UserViewController: UIViewController {
                 self.userImage.image = image
             }
             
-            
         }
         task.resume()
     }
@@ -60,7 +59,6 @@ class UserViewController: UIViewController {
             let loginManager = LoginManager()
             loginManager.logOut()
         }
-        
         self.dismiss(animated: true, completion: nil)
     }
     

@@ -10,13 +10,20 @@ import UIKit
 
 class EmailLoginViewController: UIViewController {
 
+    @IBOutlet weak var txtEmail: UIStackView!
+    @IBOutlet weak var txtPassword: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
     }
     
-
+    @IBAction func loginAction(_ sender: Any) {
+        
+    }
+    
     /*
     // MARK: - Navigation
 
