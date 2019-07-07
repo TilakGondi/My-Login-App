@@ -12,42 +12,6 @@ import FacebookLogin
 import FBSDKCoreKit
 import FBSDKLoginKit
 
-struct ResponseData: Decodable {
-    /*
-     {
-     birthday = "07/10/2000";
-     email = "decrxtbjkv_1562439492@tfbnw.net";
-     "first_name" = Betty;
-     id = 106590817314453;
-     "last_name" = Fergieberg;
-     name = "Betty Alchijfjehdch Fergieberg";
-     picture =     {
-     data =         {
-     height = 200;
-     "is_silhouette" = 0;
-     url = "https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=106590817314453&height=200&width=200&ext=1565049595&hash=AeRcnyQgfo_dOGhb";
-     width = 200;
-     };
-     };
-     }
-     */
-    
-    let birthday: String
-    let email: String
-    let first_name: String
-    let id: String
-    let last_name: String
-    let name: String
-    let picture:data
-    
-}
-
-struct data: Decodable {
-    let height: Int
-    let width: Int
-    let is_silhouette: Bool
-    let url: String
-}
 
 class FBGraphRequest: NSObject{
     
@@ -76,7 +40,7 @@ class FBGraphRequest: NSObject{
                 
                 let user = UserData(first_name: (userProfile["first_name"] as! String),
                                     last_name: (userProfile["last_name"] as! String),
-                                    phone: "2343242345245",
+                                    phone: "",
                                     email: (userProfile["email"] as! String),
                                     date_of_birth: (userProfile["birthday"] as! String),
                                     dob: df.date(from: (userProfile["birthday"] as! String))!,

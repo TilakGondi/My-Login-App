@@ -19,6 +19,7 @@ class SignUpViewController: UIViewController {
     
     fileprivate var values = ["","","","","","",""]
     
+    let datePicker = UIDatePicker()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,6 +86,9 @@ extension SignUpViewController:UITextFieldDelegate{
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         let nextTag = textField.tag + 1
+        
+        
+        
         // Try to find next responder
         let nextResponder = textField.superview?.superview?.superview?.superview?.viewWithTag(nextTag)
         
@@ -108,21 +112,25 @@ extension SignUpViewController:UITextFieldDelegate{
             self.signUpTableView.scrollToRow(at: path, at: .top, animated: true)
         }
         
+        
         return false
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         
         if let cell = textField.superview?.superview as? TextFieldTableViewCell,let path = signUpTableView.indexPath(for: cell) {
-            if textField.text != nil || textField.text == ""{
+            if textField.text != nil && textField.text != ""{
                     values[path.row] = cell.txtCellField.text ?? ""
             }
-            
         }
         
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
+        if textField.tag == 2 {
+            showDatePickerFor(textField)
+        }
+        
         if self.tableViewBottomAnchor.constant < 200{
             self.tableViewBottomAnchor.constant = 200
             self.view.updateConstraints()
@@ -263,3 +271,35 @@ extension SignUpViewController {
     }
 }
 
+
+extension SignUpViewController {
+    
+    func showDatePickerFor(_ textField:UITextField) {
+        datePicker.datePickerMode = .date
+        
+        let toolBar = UIToolbar()
+        toolBar.sizeToFit()
+        
+        let done = UIBarButtonItem(title: "Done", style: .done, target: self, action: Selector(("datePickerDone")))
+        
+        let space = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+        
+        toolBar.setItems([space,done], animated: true)
+        
+        textField.inputAccessoryView = toolBar
+        textField.inputView = datePicker
+    }
+    
+    @objc
+    func datePickerDone() {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd/MM/yyyy"
+        values[2] = formatter.string(from: datePicker.date)
+        self.signUpTableView.reloadData()
+        self.view.endEditing(true)
+        if self.tableViewBottomAnchor.constant > 10 {
+            self.tableViewBottomAnchor.constant = 10
+            self.view.updateConstraints()
+        }
+    }
+}
