@@ -24,22 +24,21 @@ class EmailLoginViewController: UIViewController {
     }
     
     @IBAction func loginAction(_ sender: Any) {
+        
         guard let user:UserData = (DBManager.shared.fetchUserWith(emailId: values[0], password: values[1])) else{
-            self.show(Alert: .InfoAlert, title: "Login error", message: "User email id or password wrong. Please try again later.", onController: self)
+            Utility.shared.show(Alert: .InfoAlert, title: "Login error", message: "User email id or password wrong. Please try again later.", onController: self)
             return
         }
         print(user.first_name as Any)
         
-        let storyBoard = UIStoryboard.init(name: "Main", bundle: nil)
-        let profileView:UserViewController = storyBoard.instantiateViewController(withIdentifier: "ProfileVC") as! UserViewController
-        profileView.userData = user
-        self.navigationController?.present(profileView, animated: true, completion: nil)
+        NavigationHelper.shared.goToUserProfileFrom(self, withUser: user)
         
     }
 
 }
 
 
+// MARK: - <#UITableViewDataSource,UITableViewDelegate#>
 extension EmailLoginViewController:UITableViewDataSource,UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -69,11 +68,9 @@ extension EmailLoginViewController:UITextFieldDelegate{
         if nextResponder != nil {
             // Found next responder, so set it
             nextResponder?.becomeFirstResponder()
-            
         } else {
             // Not found, so remove keyboard
             textField.resignFirstResponder()
-           
         }
         
         if let cell = textField.superview?.superview as? TextFieldTableViewCell,let path = loginTableView.indexPath(for: cell){
@@ -86,56 +83,18 @@ extension EmailLoginViewController:UITextFieldDelegate{
     func textFieldDidEndEditing(_ textField: UITextField) {
         
         if let cell = textField.superview?.superview as? TextFieldTableViewCell,let path = loginTableView.indexPath(for: cell) {
-            if textField.text != nil || textField.text == ""{
+            if textField.text != nil && textField.text == ""{
                 values[path.row] = cell.txtCellField.text ?? ""
             }
-            
         }
-        
-        
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        
         if  textField.tag == 1{
-            //            textField.resignFirstResponder()
             textField.isSecureTextEntry = true
-            
         }
     }
 }
 
 
-extension EmailLoginViewController {
-    func show(Alert type:AlertType,title t:String,message m:String,onSuccess s:(()-> Void)? = nil,
-              onFailure f:(() -> Void)? = nil,onController c:UIViewController?,confirmTitles:[String]? = nil) {
-        if c != nil {
-            let alert = UIAlertController(title: t, message: m, preferredStyle: .alert)
-            if type == .InfoAlert {
-                if let ttl = confirmTitles {
-                    alert.addAction(UIAlertAction(title: ttl[0], style: .default, handler: nil))
-                } else {
-                    alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (act) in
-                        if let closure = s {
-                            closure()
-                        }
-                    }))
-                }
-            } else if type == .ConfirmAlert {
-                if let ttl = confirmTitles {
-                    alert.addAction(UIAlertAction(title: ttl[0], style: .cancel, handler: { (act) in
-                        if let closure = f {
-                            closure()
-                        }
-                    }))
-                    alert.addAction(UIAlertAction(title: ttl[1], style: .default, handler: { (act) in
-                        if let closure = s {
-                            closure()
-                        }
-                    }))
-                }
-            }
-            c!.present(alert, animated: true, completion: nil)
-        }
-    }
-}
+

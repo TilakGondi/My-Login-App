@@ -32,13 +32,13 @@ class SignUpViewController: UIViewController {
         
         if self.validateAndSignUp() {
             
-            self.show(Alert: .InfoAlert, title: "Signup success", message: "You have been successfully signed up. Please login.", onController: self)
+            Utility.shared.show(Alert: .InfoAlert, title: "Signup success", message: "You have been successfully signed up. Please login.", onController: self)
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                 self.dismiss(animated: true, completion: nil)
             }
             
         }else{
-            self.show(Alert: .InfoAlert, title: "Signup failed", message: "Failed to signup, please check the values you have entered and try again.", onController: self)
+            Utility.shared.show(Alert: .InfoAlert, title: "Signup failed", message: "Failed to signup, please check the values you have entered and try again.", onController: self)
             return
         }
         
@@ -86,8 +86,6 @@ extension SignUpViewController:UITextFieldDelegate{
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         let nextTag = textField.tag + 1
-        
-        
         
         // Try to find next responder
         let nextResponder = textField.superview?.superview?.superview?.superview?.viewWithTag(nextTag)
@@ -140,50 +138,42 @@ extension SignUpViewController:UITextFieldDelegate{
     
 }
 
-enum AlertType:Int {
-    case InfoAlert=0,ConfirmAlert
-}
 
+// MARK: - Validation helper extension
 extension SignUpViewController {
     
     func validateAndSignUp() -> Bool {
         var result:Bool = false
         
         
-        
-        let df = DateFormatter()
-        df.dateFormat = "dd/MM/yyyy"
-        
-        
-        if !self.isEmpty(string: values[0]) {
+        if !Utility.shared.isEmpty(string: values[0]) {
             result = true
         }else{
             
             result = false
         }
         
-        if !self.isEmpty(string: values[1]) {
+        if !Utility.shared.isEmpty(string: values[1]) {
             result = true
         }else{
             result = false
         }
         
-        if !self.isEmpty(string: values[2]) {
+        if !Utility.shared.isEmpty(string: values[2]) {
             result = true
         }else{
             result = false
         }
         
-        if !self.isEmpty(string: values[3]) {
+        if !Utility.shared.isEmpty(string: values[3]) {
             result = true
         }else{
             result = false
         }
         
-        
-        if !self.isEmpty(string: values[4]) {
-            if !self.isValidEmail(email: values[4]){
-                self.show(Alert: .InfoAlert, title: "Error", message: "Please enter valid email.", onController: self)
+        if !Utility.shared.isEmpty(string: values[4]) {
+            if !Utility.shared.isValidEmail(email: values[4]){
+                Utility.shared.show(Alert: .InfoAlert, title: "Error", message: "Please enter valid email.", onController: self)
                 result = false
             }else{
                 result = true
@@ -192,20 +182,17 @@ extension SignUpViewController {
             result = false
         }
         
-        if !self.isEmpty(string: values[5]) && !self.isEmpty(string: values[6]) {
+        if !Utility.shared.isEmpty(string: values[5]) && !Utility.shared.isEmpty(string: values[6]) {
             
             if values[5] == values[6] {
                 result = true
             }else{
-                self.show(Alert: .InfoAlert, title: "Error", message: "Passwords do not match.", onController: self)
+                Utility.shared.show(Alert: .InfoAlert, title: "Error", message: "Passwords do not match.", onController: self)
                 result = false
             }
         }else{
             result = false
         }
-        
-        
-        
         
         if result {
             let userInfo = UserData(first_name: values[0],
@@ -213,62 +200,16 @@ extension SignUpViewController {
                                     phone: values[3],
                                     email: values[4],
                                     date_of_birth: values[2],
-                                    dob: df.date(from: values[2])!,
+                                    dob: Utility.shared.getDateFromString(values[2]),
                                     password: values[6],
                                     imageUrl: "")
             DBManager.shared.saveUser(data: userInfo)
             
         }
         
-        
         return result
     }
     
-    func show(Alert type:AlertType,title t:String,message m:String,onSuccess s:(()-> Void)? = nil,
-              onFailure f:(() -> Void)? = nil,onController c:UIViewController?,confirmTitles:[String]? = nil) {
-        if c != nil {
-            let alert = UIAlertController(title: t, message: m, preferredStyle: .alert)
-            if type == .InfoAlert {
-                if let ttl = confirmTitles {
-                    alert.addAction(UIAlertAction(title: ttl[0], style: .default, handler: nil))
-                } else {
-                    alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (act) in
-                        if let closure = s {
-                            closure()
-                        }
-                    }))
-                }
-            } else if type == .ConfirmAlert {
-                if let ttl = confirmTitles {
-                    alert.addAction(UIAlertAction(title: ttl[0], style: .cancel, handler: { (act) in
-                        if let closure = f {
-                            closure()
-                        }
-                    }))
-                    alert.addAction(UIAlertAction(title: ttl[1], style: .default, handler: { (act) in
-                        if let closure = s {
-                            closure()
-                        }
-                    }))
-                }
-            }
-            c!.present(alert, animated: true, completion: nil)
-        }
-    }
-    
-    
-    func isEmpty(string s:String?) -> Bool {
-        guard let val = s else {
-            return true
-        }
-        return val.isEmpty
-    }
-    
-    func isValidEmail(email:String) -> Bool {
-        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-        return emailTest.evaluate(with: email)
-    }
 }
 
 
@@ -292,9 +233,7 @@ extension SignUpViewController {
     
     @objc
     func datePickerDone() {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd/MM/yyyy"
-        values[2] = formatter.string(from: datePicker.date)
+        values[2] = Utility.shared.getStringFromDate(datePicker.date)
         self.signUpTableView.reloadData()
         self.view.endEditing(true)
         if self.tableViewBottomAnchor.constant > 10 {

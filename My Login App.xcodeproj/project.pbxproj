@@ -13,6 +13,8 @@
 		9E362B7A22D1E63B00B3CAA3 /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E362B7922D1E63B00B3CAA3 /* ViewExtensions.swift */; };
 		9E362B7C22D1EC3400B3CAA3 /* TextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E362B7B22D1EC3400B3CAA3 /* TextFieldTableViewCell.swift */; };
 		9E362B8122D2727C00B3CAA3 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E362B8022D2727B00B3CAA3 /* GradientView.swift */; };
+		9E362B8322D2BA2600B3CAA3 /* NavigationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E362B8222D2BA2600B3CAA3 /* NavigationHelper.swift */; };
+		9E362B8522D2BCBD00B3CAA3 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E362B8422D2BCBD00B3CAA3 /* Utility.swift */; };
 		9EAE21FC22CFCAFA0093231E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAE21FB22CFCAFA0093231E /* AppDelegate.swift */; };
 		9EAE21FE22CFCAFA0093231E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAE21FD22CFCAFA0093231E /* LoginViewController.swift */; };
 		9EAE220122CFCAFA0093231E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9EAE21FF22CFCAFA0093231E /* Main.storyboard */; };
@@ -45,10 +47,12 @@
 		487B491CE99F0459A2A575DC /* Pods-My Login App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-My Login App.debug.xcconfig"; path = "Pods/Target Support Files/Pods-My Login App/Pods-My Login App.debug.xcconfig"; sourceTree = "<group>"; };
 		933F96C9DDA730E67BBB2932 /* Pods_My_Login_AppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_My_Login_AppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9974E4DF58B47397358110A2 /* Pods-My Login AppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-My Login AppTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-My Login AppTests/Pods-My Login AppTests.debug.xcconfig"; sourceTree = "<group>"; };
-		9E362B7322D1839600B3CAA3 /* DBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBManager.swift; sourceTree = "<group>"; };
+		9E362B7322D1839600B3CAA3 /* DBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DBManager.swift; path = ../DBManager.swift; sourceTree = "<group>"; };
 		9E362B7922D1E63B00B3CAA3 /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
 		9E362B7B22D1EC3400B3CAA3 /* TextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldTableViewCell.swift; sourceTree = "<group>"; };
 		9E362B8022D2727B00B3CAA3 /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		9E362B8222D2BA2600B3CAA3 /* NavigationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NavigationHelper.swift; path = ../NavigationHelper.swift; sourceTree = "<group>"; };
+		9E362B8422D2BCBD00B3CAA3 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		9EAE21F822CFCAFA0093231E /* My Login App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "My Login App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EAE21FB22CFCAFA0093231E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9EAE21FD22CFCAFA0093231E /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -68,7 +72,7 @@
 		9EBBFA2622D1524300575FC9 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		9EBBFA2A22D1533200575FC9 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		9EBBFA2E22D1625E00575FC9 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
-		9EBBFA3022D1678800575FC9 /* FBGraphRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBGraphRequest.swift; sourceTree = "<group>"; };
+		9EBBFA3022D1678800575FC9 /* FBGraphRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FBGraphRequest.swift; path = ../FBGraphRequest.swift; sourceTree = "<group>"; };
 		B14862245B5890DCF6D72F6A /* Pods-My Login App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-My Login App.release.xcconfig"; path = "Pods/Target Support Files/Pods-My Login App/Pods-My Login App.release.xcconfig"; sourceTree = "<group>"; };
 		BCF4B84650061035123A17FB /* Pods_My_Login_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_My_Login_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D779A4C5368A0AEE83DAF724 /* Pods-My Login AppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-My Login AppTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-My Login AppTests/Pods-My Login AppTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -110,6 +114,25 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		9E362B8622D2C1E700B3CAA3 /* HelperClasses */ = {
+			isa = PBXGroup;
+			children = (
+				9EBBFA3022D1678800575FC9 /* FBGraphRequest.swift */,
+				9E362B8222D2BA2600B3CAA3 /* NavigationHelper.swift */,
+				9E362B8422D2BCBD00B3CAA3 /* Utility.swift */,
+			);
+			path = HelperClasses;
+			sourceTree = "<group>";
+		};
+		9E362B8722D2C20400B3CAA3 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				9EAE220222CFCAFA0093231E /* My_Login_App.xcdatamodeld */,
+				9E362B7322D1839600B3CAA3 /* DBManager.swift */,
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
 		9EAE21EF22CFCAFA0093231E = {
 			isa = PBXGroup;
 			children = (
@@ -135,13 +158,12 @@
 			children = (
 				9EAE21FB22CFCAFA0093231E /* AppDelegate.swift */,
 				9EBBFA2C22D1616C00575FC9 /* Model */,
+				9E362B7D22D1EC3900B3CAA3 /* View */,
 				9EBBFA2D22D1619C00575FC9 /* ViewControllers */,
+				9E362B8722D2C20400B3CAA3 /* Database */,
+				9E362B8622D2C1E700B3CAA3 /* HelperClasses */,
 				9EAE220522CFCAFD0093231E /* Assets.xcassets */,
 				9EAE220A22CFCAFD0093231E /* Info.plist */,
-				9EAE220222CFCAFA0093231E /* My_Login_App.xcdatamodeld */,
-				9EBBFA3022D1678800575FC9 /* FBGraphRequest.swift */,
-				9E362B7322D1839600B3CAA3 /* DBManager.swift */,
-				9E362B7D22D1EC3900B3CAA3 /* View */,
 			);
 			path = "My Login App";
 			sourceTree = "<group>";
@@ -437,6 +459,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E362B8522D2BCBD00B3CAA3 /* Utility.swift in Sources */,
 				9EAE21FE22CFCAFA0093231E /* LoginViewController.swift in Sources */,
 				9EBBFA2B22D1533200575FC9 /* SignUpViewController.swift in Sources */,
 				9E362B8122D2727C00B3CAA3 /* GradientView.swift in Sources */,
@@ -444,6 +467,7 @@
 				9EBBFA2F22D1625E00575FC9 /* UserData.swift in Sources */,
 				9E362B7422D1839600B3CAA3 /* DBManager.swift in Sources */,
 				9E362B7C22D1EC3400B3CAA3 /* TextFieldTableViewCell.swift in Sources */,
+				9E362B8322D2BA2600B3CAA3 /* NavigationHelper.swift in Sources */,
 				9EBBFA2722D1524300575FC9 /* UserViewController.swift in Sources */,
 				9EBBFA2522D1522D00575FC9 /* EmailLoginViewController.swift in Sources */,
 				9EAE220422CFCAFA0093231E /* My_Login_App.xcdatamodeld in Sources */,
@@ -743,7 +767,8 @@
 				9EAE220322CFCAFA0093231E /* My_Login_App.xcdatamodel */,
 			);
 			currentVersion = 9EAE220322CFCAFA0093231E /* My_Login_App.xcdatamodel */;
-			path = My_Login_App.xcdatamodeld;
+			name = My_Login_App.xcdatamodeld;
+			path = ../My_Login_App.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

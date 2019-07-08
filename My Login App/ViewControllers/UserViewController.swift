@@ -44,14 +44,9 @@ class UserViewController: UIViewController {
                     DispatchQueue.main.async {
                         self.userImage.image = image
                     }
-                    
                 }
                 task.resume()
             }
-            
-            
-        
-        
     }
     
     
@@ -64,9 +59,6 @@ class UserViewController: UIViewController {
         }
         self.dismiss(animated: true, completion: nil)
     }
-    
-    
-
 }
 
 

@@ -30,10 +30,8 @@ class FBGraphRequest: NSObject{
                 guard let userProfile:[String:Any] = result as? [String:Any] else{
                     return
                 }
-                print(userProfile["name"]!)
                 
-                let df = DateFormatter()
-                df.dateFormat = "dd/MM/yyyy"
+                
                 
                 let picture:[String:Any] = userProfile["picture"] as! [String : Any]
                 let data:[String:Any] = picture["data"] as! [String : Any]
@@ -43,7 +41,7 @@ class FBGraphRequest: NSObject{
                                     phone: "",
                                     email: (userProfile["email"] as! String),
                                     date_of_birth: (userProfile["birthday"] as! String),
-                                    dob: df.date(from: (userProfile["birthday"] as! String))!,
+                                    dob: Utility.shared.getDateFromString((userProfile["birthday"] as! String)),
                                     password: (userProfile["id"] as! String),
                                     imageUrl: (data["url"] as! String))
                 

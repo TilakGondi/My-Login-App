@@ -11,11 +11,11 @@ import FBSDKLoginKit
 import FacebookLogin
 import FacebookCore
 
+
 class LoginViewController: UIViewController {
     
     @IBOutlet weak var fbLoginButton: UIButton!
     @IBOutlet weak var emailLoginButton: UIButton!
-    
     
     let fbGraphRequest = FBGraphRequest()
     let loginManager = LoginManager()
@@ -33,10 +33,7 @@ class LoginViewController: UIViewController {
                     return
                 }
                 
-                let storyBoard = UIStoryboard.init(name: "Main", bundle: nil)
-                let profileView:UserViewController = storyBoard.instantiateViewController(withIdentifier: "ProfileVC") as! UserViewController
-                profileView.userData = user
-                self.navigationController?.present(profileView, animated: true, completion: nil)
+               NavigationHelper.shared.goToUserProfileFrom(self, withUser: user)
             })
             print("Logged in!")
             
@@ -63,23 +60,16 @@ class LoginViewController: UIViewController {
                 case .cancelled:
                     print("User cancelled login.")
                 case .success(let grantedPermissions, let declinedPermissions, let accessToken):
-                    print(accessToken)
-                    print(grantedPermissions)
-                    print(declinedPermissions)
-                    
+                   
                     self.fbGraphRequest.getUserDataFromFB(AccessToken.current!.tokenString, completion: {[unowned self] (userData, error) in
                         print(userData ?? "")
 
                         guard let user = userData else {
-                            print("Erro Fetching user data")
+                            print("Erro Fetching user data from FBGrapAPI")
                             self.loginManager.logOut()
                             return
                         }
-
-                        let storyBoard = UIStoryboard.init(name: "Main", bundle: nil)
-                        let profileView:UserViewController = storyBoard.instantiateViewController(withIdentifier: "ProfileVC") as! UserViewController
-                        profileView.userData = user
-                        self.navigationController?.present(profileView, animated: true, completion: nil)
+                        NavigationHelper.shared.goToUserProfileFrom(self, withUser: user)
                     })
                     print("Logged in!")
                 }
